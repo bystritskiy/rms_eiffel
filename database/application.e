@@ -37,6 +37,7 @@ feature {NONE} -- Initialization
 			db_path := "rms.db"
 			init_db
 			add_general ("Bertran", "Report header", create {DATE}.make (2016, 3, 18), create {DATE}.make_now)
+			add_teaching (2, "High way to Eiffel", "smthing", "freestyler", "racamacafon", "selecto")
 			across
 				get_id_salary_user ("Bertran") as str
 			loop
@@ -66,7 +67,11 @@ feature {NONE} -- Initialization
 			query: STRING
 		do
 			create db.make_open_read_write (db_path)
-			query := "CREATE TABLE REPORTS(ID INTEGER PRIMARY KEY, NAME TEXT, HEAD TEXT, START TEXT, END TEXT" + ", COURSES TEXT, EXAMINATIONS TEXT, " + "SUPERVISED     TEXT, REPORTS TEXT, PHD_THESES TEXT, GRANTS TEXT, PROJECTS TEXT, COLLABORATIONS TEXT, CONFERENCE TEXT, " + "JOURNAL TEXT, PATENTS TEXT, LICENSING TEXT, AWARDS TEXT, MEMBERSHIP TEXT, PRIZES TEXT, INDUSTRY TEXT, OTHER TEXT" + ");"
+			query := "CREATE TABLE REPORTS(ID INTEGER PRIMARY KEY, NAME TEXT, HEAD TEXT, START TEXT, END TEXT" +
+			", COURSES TEXT, EXAMINATIONS TEXT, " +
+			 "SUPERVISED     TEXT, REPORTS TEXT, PHD_THESES TEXT, GRANTS TEXT, PROJECTS TEXT, COLLABORATIONS TEXT, CONFERENCE TEXT, " +
+			  "JOURNAL TEXT, PATENTS TEXT, LICENSING TEXT, AWARDS TEXT, MEMBERSHIP TEXT, PRIZES TEXT, INDUSTRY TEXT, OTHER TEXT" +
+			  ");"
 
 				--			query := "CREATE TABLE COMPANY (ID INT PRIMARY KEY, NAME TEXT, AGE INT, ADDRESS CHAR(50), SALARY REAL);"
 			create db_insert_statement.make (query, db)
@@ -90,13 +95,24 @@ feature {NONE} -- Initialization
 			if db_insert_statement.has_error then
 				print ("Error while inserting into table REPORTS")
 			end
+			db.close
 		end
 
-	add_teaching
+	add_teaching(id:INTEGER; courses, examinations, supervised, reports, phd_theses:STRING)
 			-- section "TEACHING"
 		local
 			query: STRING
 		do
+			query := "UPDATE REPORTS SET COURSES = '" + courses + "', EXAMINATIONS = '" + examinations + "', SUPERVISED = '" + supervised +
+			"', REPORTS = '" + reports + "', PHD_THESES = '" + phd_theses + "' WHERE ID = " + id.out + " ;"
+			db.open_read_write
+			print ("%N" + query)
+			create db_modify_statement.make (query, db)
+			db_modify_statement.execute
+			if db_modify_statement.has_error then
+				print ("Error while updating into table REPORTS section 'teaching'")
+			end
+			db.close
 		end
 
 	add_reaserch
@@ -134,24 +150,7 @@ feature {NONE} -- Initialization
 		do
 		end
 
-		--	insert_specific_data (id: INTEGER; name: STRING): TUPLE [success: BOOLEAN; id: STRING]
-		--			-- inserts specific data to table COMPANY (example)
-		--		local
-		--			query: STRING
-		--		do
-		--			create db.make_open_read_write (db_path)
-		--			query := "INSERT INTO REPORTS (ID, NAME, AGE, ADDRESS, SALARY) values(" + id.out + ",'" + name + "', 44, 'THIS', 10);"
-		--			create Result.default_create
-		--			create db_insert_statement.make (query, db)
-		--			db_insert_statement.execute
-		--			Result.success := true
-		--			Result.id := db_insert_statement.last_row_id.out
-		--			if db_insert_statement.has_error then
-		--				print ("Error while inserting into table REPORTS")
-		--				Result.success := false
-		--				Result.id := "-1"
-		--			end
-		--		end
+
 
 	get_id_salary_user (user: STRING): ARRAY [STRING_8]
 		local
@@ -211,5 +210,22 @@ feature {NONE} -- Initialization
 		--			Result := not db_modify_statement.has_error
 		--			db.close
 		--		end
-
+	--	insert_specific_data (id: INTEGER; name: STRING): TUPLE [success: BOOLEAN; id: STRING]
+		--			-- inserts specific data to table COMPANY (example)
+		--		local
+		--			query: STRING
+		--		do
+		--			create db.make_open_read_write (db_path)
+		--			query := "INSERT INTO REPORTS (ID, NAME, AGE, ADDRESS, SALARY) values(" + id.out + ",'" + name + "', 44, 'THIS', 10);"
+		--			create Result.default_create
+		--			create db_insert_statement.make (query, db)
+		--			db_insert_statement.execute
+		--			Result.success := true
+		--			Result.id := db_insert_statement.last_row_id.out
+		--			if db_insert_statement.has_error then
+		--				print ("Error while inserting into table REPORTS")
+		--				Result.success := false
+		--				Result.id := "-1"
+		--			end
+		--		end+
 end
