@@ -115,21 +115,11 @@ feature {NONE} -- Initialization
 			db.close
 		end
 
-	add_reasearch(id:INTEGER; grants, research_outside, publication, journal_publication:STRING)
+	add_reaserch
 			-- section "REASEARCH"
 		local
 			query: STRING
 		do
-			query := "UPDATE REPORTS SET RESEARCH = '" + grants + "', RESEARCH OUTSIDE OF THE GRANT: = '" + research_outside + "', COOPERATION = '" + cooperation +
-			"', PUBLICATION = '" + publication + "', JOURNAL PUBLICATION = '" + journal_publication + "' WHERE ID = " + id.out + " ;"
-			db.open_read_write
-			print ("%N" + query)
-			create db_modify_statement.make (query, db)
-			db_modify_statement.execute
-			if db_modify_statement.has_error then
-				print ("Error while updating into table REPORTS section 'reasearch'")
-			end
-			db.close
 		end
 
 	add_technology
