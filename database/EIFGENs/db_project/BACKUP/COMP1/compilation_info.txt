@@ -1,5 +1,0 @@
-Compiler version: 16.05.9.8969 GPL Edition - macosx-x86-64
-Type: Quick_melt
-batch mode: False
-new session: True
-starting date: 03/28/2017 9:01:10.180 AM
