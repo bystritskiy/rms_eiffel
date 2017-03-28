@@ -37,48 +37,61 @@ feature {NONE} -- Initialization
 			test_user_id: INTEGER
 			test_report_id: INTEGER
 			command: INTEGER
+			tmp:INTEGER
 		do
 			db_path := "rms.db"
 			test_name := "Bertran"
 			init_db
 			print ("%N1 zaregat' usera%N")
 			print ("2 authorisation%N")
-			print ("3 add info%N")
-			print ("4 display tables")
+			print ("3 add report%N")
+			print ("4 add info%N")
+			print ("5 display tables")
 			io.read_integer
 			command := io.last_integer
 			print ("%N")
 			if command = 1 then
+				--registr
 				print ("Suppose your name is 'Bertran'")
 				add_user (test_name, "Eiffel corporation")
 				display_table ("USERS")
-				test_user_id := get_user_id_by_name (test_name)
-				test_report_id := add_report (test_user_id, create {DATE}.make (2016, 3, 18), create {DATE}.make_now)
-				display_table ("REPORTS")
-				add_teaching (test_report_id, "High way to Eiffel", "smthing", "freestyler", "racamacafon", "selecto")
-				display_table ("REPORTS_CONTENT")
 			end
 			if command = 2 then
+				--auth
 				print ("enter your name >> ")
 				io.read_line
 				print ("%N")
-				print ("your id: " + get_user_id_by_name (io.last_string).out + "%N")
+				test_user_id :=  get_user_id_by_name (io.last_string)
+				print ("your id: " + test_user_id.out + "%N")
+				across get_user_reports(test_user_id).new_cursor as rep_id loop
+					print("%N" + rep_id.item.out)
+				end
 			end
 			if command = 3 then
+				--add report into reports_content and reports
+				print ("enter your user_id >> ")
+				io.read_integer
+				test_user_id:=io.last_integer
+				print ("%N")
+				--!!!! change some date if want create new report from one user!!!
+				test_report_id := get_report_id_or_create (test_user_id, create {DATE}.make (2016, 2, 18), create {DATE}.make_now)
+				print("your report_id is>" + test_report_id.out + "%N")
+				display_table("REPORTS")
 			end
 			if command = 4 then
+				print ("enter your report_id >> ")
+				io.read_integer
+				test_report_id:=io.last_integer
+				print ("%N")
+				add_teaching (test_report_id, "High way to Eiffel", "smthing", "freestyler", "racamacafon", "selecto")
+				display_table ("REPORTS_CONTENT")
+			end
+			if command = 5 then
+				--display all tables
 				display_table ("USERS")
 				display_table ("REPORTS")
 				display_table ("REPORTS_CONTENT")
 			end
-
-				--			add_user (test_name, "Eiffel corporation")
-				--			display_table ("USERS")
-				--			test_user_id := get_user_id_by_name (test_name)
-				--			test_report_id := add_report (test_user_id, create {DATE}.make (2016, 3, 18), create {DATE}.make_now)
-				--			display_table("REPORTS")
-				--			add_teaching (test_report_id, "High way to Eiffel", "smthing", "freestyler", "racamacafon", "selecto")
-				--			display_table ("REPORTS_CONTENT")
 		end
 
 	init_db
@@ -160,21 +173,26 @@ feature {NONE} -- Initialization
 			invoke_insert_statement (query)
 		end
 
-	add_report (user_id: INTEGER; report_start, report_end: DATE): INTEGER
+	get_report_id_or_create (user_id: INTEGER; report_start, report_end: DATE): INTEGER
 			-- table reports + report_content-- user function -- add report in database
 		local
 			query: STRING
 			report_id: INTEGER
 		do
-			query := "INSERT INTO REPORTS( USER_ID, REPORT_START, REPORT_END) values('" + user_id.out + "','" + report_start.out + "', '" + report_end.out + "');"
-			invoke_insert_statement (query)
-			report_id := get_report_id (user_id, report_start, report_end)
-			Result := report_id
+			report_id:=get_report_id(user_id, report_start, report_end)
 			if report_id <= 0 then
-				print ("ALERT!!!! DANGER ERROR IN DATABASE !!!! NEED FIX")
+				query := "INSERT INTO REPORTS( USER_ID, REPORT_START, REPORT_END) values('" + user_id.out + "','" + report_start.out + "', '" + report_end.out + "');"
+				invoke_insert_statement (query)
+				report_id := get_report_id (user_id, report_start, report_end)
+				Result := report_id
+				if report_id <= 0 then
+					print ("ALERT!!!! DANGER ERROR IN DATABASE !!!! NEED FIX")
+				end
+				query := "INSERT INTO REPORTS_CONTENT( REPORT_ID) values('" + report_id.out + "');"
+				invoke_insert_statement (query)
+			else
+				Result:=report_id
 			end
-			query := "INSERT INTO REPORTS_CONTENT( REPORT_ID) values('" + report_id.out + "');"
-			invoke_insert_statement (query)
 		end
 
 	add_teaching (report_id: INTEGER; courses, examinations, supervised, reports, phd_theses: STRING)
@@ -251,6 +269,7 @@ feature {NONE} -- Initialization
 			query: STRING
 			a_row: SQLITE_RESULT_ROW
 			i: NATURAL
+			index:INTEGER
 		do
 			create Result.make_empty
 			create db.make_open_read_write (db_path)
@@ -261,45 +280,28 @@ feature {NONE} -- Initialization
 			--
 			l_query_result_cursor := db_query_statement.execute_new
 			if l_query_result_cursor.after then
-				print ("Error while quering table user")
-					--				Result := Void
+				print ("Error while quering table reports")
 			else
 					-- example of iterating
 				from
 					l_query_result_cursor.start
+					create Result.make_filled (-100500, 1, 1)
+					i := 1
+					index:=1
 				until
 					l_query_result_cursor.after
 				loop
-					from
-						i := 1
-						a_row := l_query_result_cursor.item
-							--						create Result.make_filled ("", i.as_integer_32, a_row.count.as_integer_32)
-					until
-						i > a_row.count
-					loop
-						print ("Column Name: ")
-						print (a_row.column_name (i))
-						io.new_line
-						if a_row.value (i) /= Void then
-							print (a_row.value (i))
-								--							print("index>" + i.out)
-								--							Result.put (a_row.value (i).out, i.as_integer_32)
-						end
-						io.new_line
-						i := i + 1
-					end
-					io.new_line
-					io.new_line
-					io.new_line
+					Result.grow (index)
+					print("kek")
+					a_row := l_query_result_cursor.item
+					Result.put (a_row.integer_value (i), index)
+					index := index + 1
 					l_query_result_cursor.forth
 				end
 				l_query_result_cursor.start
-					-- TODO: fill result
-					-- Result.TODO
 			end
 			db.close
 			--
-
 		end
 
 	get_user_id_by_name (name: STRING): INTEGER
@@ -337,7 +339,7 @@ feature {NONE} -- Initialization
 				--			create db_query_statement.make ("SELECT * FROM REPORTS_CONTENT WHERE REPORT_ID='" + report_id.out + "';", db)
 			l_query_result_cursor := db_query_statement.execute_new
 			if l_query_result_cursor.after then
-				print ("Error while quering table user")
+				print ("Error while quering table")
 					--				Result := Void
 			else
 					-- example of iterating
