@@ -7,7 +7,7 @@ note
 
 class
 	RMS
-	
+
 
 inherit
 	WSF_LAUNCHABLE_SERVICE
@@ -15,7 +15,7 @@ inherit
 			initialize
 		end
 	APPLICATION_LAUNCHER [RMS_EXECUTION]
-	
+
 
 create
 	make_and_launch
