@@ -2,30 +2,42 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Administration panel</title>
+	<title>Education</title>
 	<link rel="stylesheet" href="css/fonts.css">
 	<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/common.css">
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/education.css">
+	<link rel="stylesheet" href="css/fixed_nav_menu.css">
+	<link rel="stylesheet" href="css/forms_style.css">
 </head>
 <body>
 	
-	<div class="container">
 
-		<div class="block1">
+	<i class="fx_nav_menu_bttn fa fa-angle-down" aria-hidden="true"></i>
 
-			<span class="block_title">To add</span>
 
-			<ul class="block1_content">
+	<div class="page_title">Добавить нового проффесора</div>
+	
+	<div class="block">
+		
+		
 
-				<li class="b1_content_item1 content_items">Hello, Administrator!</li>
+		<form id="form" name="form" method="get" action="index.html">
+			<input type="hidden" name="section" value="education" >
+		
+			<div class="block_title">Введите имя профессора:</div>
 
-			</ul>
-
-		</div>
+			<div id="stud">
+				<p class="stud_note_1"><input class="stud_note" id="stud_note_1" name="stud_note_1" size="20" type="text"></p>
+			</div>
+			<div id="stud_data"></div>
+			
+			<input class="submit_bttn" name="submit" type="submit" value="Send" onclick="disable_inputs()">
+			
+		</form>
 
 	</div>
-
+	
 	<script src="libs/jquery-3.1.1.min.js"></script>
 	<script src="js/core.js"></script>
 </body>
