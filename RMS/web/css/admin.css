@@ -1,4 +1,4 @@
-.container{
+﻿.container{
 	position: absolute;
 	width: 100%;
 	top: 50%;
@@ -56,7 +56,7 @@
 }
 .block2_content{
 	position: relative;
-	top: 30%;
+	top: 10%;
 	text-align: left;
 	margin-left: 40px;
 	margin-right: 40px;
@@ -64,7 +64,7 @@
 	text-align: center;
 }
 .b2_content_item1{
-
+	margin-top: 10px;
 }
 .b2_content_item2{
 	margin-top: 10px;
