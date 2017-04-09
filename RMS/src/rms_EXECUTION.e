@@ -40,6 +40,7 @@ feature -- Execution
 			elseif request.path_info.ends_with (".html") then
 				if is_admin_page then
 						--TODO: admin
+					do_admin_doings()
 					create {WSF_FILE_RESPONSE} mesg.make_with_content_type ({HTTP_MIME_TYPES}.text_html, "web\" + get_file_name)
 				else
 					if analyse_request then
@@ -58,10 +59,20 @@ feature -- Execution
 			response.send (mesg)
 		end
 
+	do_admin_doings()
+	local
+		do
+			--1. определить какая информация требуется
+			if request.path_info.ends_with ("admin.html") then
+				response.add_cookie (create {WSF_COOKIE}.make ("admin_data", "finish"))
+--				print(db.get_all_table("USERS"))
+			end
+		end
+
 	is_admin_page: BOOLEAN
 			--TODO: написать функцию, которая могла бы вернуть true, когда запрашивается страницы (.htlm) админа
 		do
-			Result := false
+			Result := request.path_info.has_substring ("/admin")
 		end
 
 	analyse_request: BOOLEAN
