@@ -7,8 +7,24 @@
 	<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/common.css">
 	<link rel="stylesheet" href="css/main.css">
+
+	<script type="text/javascript">
+	    function manage_cookie() {
+		   document.getElementById('lab_name').innerHTML = getCookie('lab_name');
+		   document.getElementById('professor_name').innerHTML = getCookie('user_name');
+		   document.getElementById('report_period').innerHTML = '' + getCookie('report_start') + ' to ' + getCookie('report_end');
+		}
+
+		// возвращает cookie с именем name, если есть, если нет, то undefined
+		function getCookie(name) {
+		  var matches = document.cookie.match(new RegExp(
+		    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+		  ));
+		  return matches ? decodeURIComponent(matches[1]) : undefined;
+		}
+  </script>
 </head>
-<body>
+<body onload="manage_cookie()">
 	
 	<div class="container">
 
@@ -18,9 +34,12 @@
 
 			<ul class="block1_content">
 
-				<li class="b1_content_item1 content_items">Boriska Lab</li>
-				<li class="b1_content_item2 content_items">Гурьев Борис Игоревич</li>
-				<li class="b1_content_item3 content_items">19.02.17 - 20.02.17</li>
+				<li  class="b1_content_item1 content_items"><b>Name of unit:</b></li>
+				<li id="lab_name" class="b1_content_item1 content_items">##lab_name##</li>
+				<li  class="b1_content_item2 content_items"><b>Your name:</b></li>
+				<li id="professor_name" class="b1_content_item2 content_items">##prof_name##</li>
+				<li  class="b1_content_item3 content_items"><b>Period of report</b></li>
+				<li id="report_period" class="b1_content_item3 content_items">##report_period##</li>
 
 			</ul>
 
