@@ -4,7 +4,6 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-
 class
 	DATABASE
 
@@ -26,65 +25,11 @@ feature -- Initialization
 			test_user_id: INTEGER
 			test_report_id: INTEGER
 			command: INTEGER
-			tmp:INTEGER
+			tmp: INTEGER
 		do
 			db_path := "rms.db"
 			init_db
-
---			test_name := "Bertran"
---			print ("%N1 zaregat' usera%N")
---			print ("2 authorisation%N")
---			print ("3 add report%N")
---			print ("4 add info%N")
---			print ("5 display tables")
---			io.read_integer
---			command := io.last_integer
---			print ("%N")
---			if command = 1 then
---				--registr
---				print ("Suppose your name is 'Bertran'")
---				add_user (test_name, "Eiffel corporation")
---				display_table ("USERS")
---			end
---			if command = 2 then
---				--auth
---				print ("enter your name >> ")
---				io.read_line
---				print ("%N")
---				test_user_id :=  get_user_id_by_name (io.last_string)
---				print ("your id: " + test_user_id.out + "%N")
---				across get_user_reports(test_user_id).new_cursor as rep_id loop
---					print("%N" + rep_id.item.out)
---				end
---			end
---			if command = 3 then
---				--add report into reports_content and reports
---				print ("enter your user_id >> ")
---				io.read_integer
---				test_user_id:=io.last_integer
---				print ("%N")
---				--!!!! change some date if want create new report from one user!!!
---				test_report_id := get_report_id_or_create (test_user_id, create {DATE}.make (2016, 2, 18), create {DATE}.make_now)
---				print("your report_id is>" + test_report_id.out + "%N")
---				display_table("REPORTS")
---			end
---			if command = 4 then
---				print ("enter your report_id >> ")
---				io.read_integer
---				test_report_id:=io.last_integer
---				print ("%N")
---				add_teaching (test_report_id, "High way to Eiffel", "smthing", "freestyler", "racamacafon", "selecto")
---				display_table ("REPORTS_CONTENT")
---			end
---			if command = 5 then
---				--display all tables
---				display_table ("USERS")
---				display_table ("REPORTS")
---				display_table ("REPORTS_CONTENT")
---			end
 		end
-
-
 
 	add_user (name, unit: STRING)
 			-- table users -- admin function -- add user in database
@@ -95,8 +40,6 @@ feature -- Initialization
 			invoke_insert_statement (query)
 		end
 
-
-
 	add_teaching (report_id: INTEGER; courses, examinations, supervised, reports, phd_theses: STRING)
 			-- section "TEACHING"
 		local
@@ -106,9 +49,7 @@ feature -- Initialization
 			invoke_update_statement (query)
 		end
 
-
-
-	add_reaserch(report_id:INTEGER; grants,projects,collaborations,conference,journal:STRING)
+	add_reaserch (report_id: INTEGER; grants, projects, collaborations, conference, journal: STRING)
 			--section "REASEARCH"
 			--GRANTS TEXT, PROJECTS TEXT, COLLABORATIONS TEXT, CONFERENCE TEXT, " + "JOURNAL TEXT
 		local
@@ -116,9 +57,8 @@ feature -- Initialization
 		do
 			query := "UPDATE REPORTS_CONTENT SET GRANTS = '" + grants + "', PROJECTS = '" + projects + "', COLLABORATIONS = '" + collaborations + "', CONFERENCE = '" + conference + "', JOURNAL = '" + journal + "' WHERE REPORT_ID = " + report_id.out + " ;"
 			invoke_update_statement (query)
+			print(query)
 		end
-
-
 
 	add_technology
 			-- section "TECHNOLOGY TRANSFER"
@@ -127,16 +67,12 @@ feature -- Initialization
 		do
 		end
 
-
-
 	add_distinctions
 			-- section "DISTINCTIONS"
 		local
 			query: STRING
 		do
 		end
-
-
 
 	add_outside
 			-- section "OUTSIDE ACTIVITIES"
@@ -145,17 +81,12 @@ feature -- Initialization
 		do
 		end
 
-
-
 	add_other
 			-- section "OTHER INFORMAITON"
 		local
 			query: STRING
 		do
-
 		end
-
-
 
 	get_report_id_or_create (user_id: INTEGER; report_start, report_end: STRING): INTEGER
 			-- table reports + report_content-- user function -- add report in database
@@ -179,8 +110,6 @@ feature -- Initialization
 			end
 		end
 
-
-
 	get_user_reports (user_id: INTEGER): ARRAY [INTEGER]
 		local
 			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
@@ -194,7 +123,6 @@ feature -- Initialization
 			query := "SELECT REPORT_ID FROM REPORTS WHERE USER_ID ='" + user_id.out + "';"
 			print ("%N" + query)
 			create db_query_statement.make (query, db)
-
 			l_query_result_cursor := db_query_statement.execute_new
 			if l_query_result_cursor.after then
 				print ("Error while quering table reports")
@@ -219,8 +147,6 @@ feature -- Initialization
 			db.close
 		end
 
-
-
 	get_user_id_by_name (name: STRING): INTEGER
 		local
 			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
@@ -244,14 +170,64 @@ feature -- Initialization
 			db.close
 		end
 
-	check_user_by_id(user_id:INTEGER):BOOLEAN
+	get_all_table (table_name: STRING): STRING
+		local
+			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			i: NATURAL
+			a_row: SQLITE_RESULT_ROW
+		do
+			Result:=""
+--			print ("%Ndisplay " + table_name + "%N")
+			create db.make_open_read_write (db_path)
+				--			create Result.make_empty
+			create db_query_statement.make ("SELECT * FROM " + table_name + ";", db)
+				--			create db_query_statement.make ("SELECT * FROM REPORTS_CONTENT WHERE REPORT_ID='" + report_id.out + "';", db)
+			l_query_result_cursor := db_query_statement.execute_new
+			if l_query_result_cursor.after then
+				Result:="Error while quering table"
+					--				Result := Void
+			else
+					-- example of iterating
+				from
+					l_query_result_cursor.start
+				until
+					l_query_result_cursor.after
+				loop
+					from
+						i := 1
+						a_row := l_query_result_cursor.item
+							--create Result.make_filled ("", i.as_integer_32, a_row.count.as_integer_32)
+					until
+						i > a_row.count
+					loop
+--						print ("Column Name: ")
+						Result.append (a_row.column_name (i) + "_") -- space
+
+						if a_row.value (i) /= Void then
+							Result.append(a_row.value (i).out + "|") -- enter
+								--print("index>" + i.out)
+								--Result.put (a_row.value (i).out, i.as_integer_32)
+						end
+--						io.new_line
+						i := i + 1
+					end
+					l_query_result_cursor.forth
+				end
+				l_query_result_cursor.start
+					-- TODO: fill result
+					-- Result.TODO
+			end
+			db.close
+		end
+
+	check_user_by_id (user_id: INTEGER): BOOLEAN
 		local
 			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			query: STRING
 			a_row: SQLITE_RESULT_ROW
 			i: NATURAL
 		do
-			Result:=false
+			Result := false
 			query := "SELECT NAME FROM USERS WHERE USER_ID= '" + user_id.out + "';"
 			print ("%N" + query)
 			create db.make_open_read_write (db_path)
@@ -317,21 +293,22 @@ feature -- Initialization
 			db.close
 		end
 
-
 feature {NONE}
 
 	db: SQLITE_DATABASE
+
 	db_path: STRING
-	db_query_statement: detachable SQLITE_QUERY_STATEMENT		-- an sql query statement for the db
-	db_insert_statement: detachable SQLITE_INSERT_STATEMENT		-- an sql insert statement for the db
-	db_modify_statement: detachable SQLITE_MODIFY_STATEMENT		-- sql modification statement, e.g. UPDATE
 
+	db_query_statement: detachable SQLITE_QUERY_STATEMENT -- an sql query statement for the db
 
+	db_insert_statement: detachable SQLITE_INSERT_STATEMENT -- an sql insert statement for the db
+
+	db_modify_statement: detachable SQLITE_MODIFY_STATEMENT -- sql modification statement, e.g. UPDATE
 
 	init_db
 		do
 			if (create {RAW_FILE}.make_with_path (create {PATH}.make_from_string (db_path))).exists then
---				print ("Connect to exist table%N")
+					--				print ("Connect to exist table%N")
 				create db.make_open_read_write (db_path)
 			else
 				create db.make_create_read_write (db_path)
@@ -340,8 +317,6 @@ feature {NONE}
 			end
 			db.close
 		end
-
-
 
 	create_tables
 			--Create full table in database to store reports
@@ -373,12 +348,11 @@ feature {NONE}
 			db.close
 		end
 
-
-
 	invoke_update_statement (query: STRING)
 			--use it if UPDATE query
 		do
 			db.open_read_write
+			query.replace_substring_all ("'", "?")
 			print ("%N" + query)
 			create db_modify_statement.make (query, db)
 			db_modify_statement.execute
@@ -387,8 +361,6 @@ feature {NONE}
 			end
 			db.close
 		end
-
-
 
 	invoke_insert_statement (query: STRING)
 			--use it if INSERT query
@@ -427,4 +399,5 @@ feature {NONE}
 			end
 			db.close
 		end
+
 end

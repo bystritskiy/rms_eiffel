@@ -64,37 +64,33 @@ feature -- Execution
 		do
 			--1. определить какая информация требуется
 			if request.path_info.ends_with ("admin.html") then
-				response.add_cookie (create {WSF_COOKIE}.make ("admin_data", "finish"))
---				print(db.get_all_table("USERS"))
+				response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_all_table ("USERS")))
+				print(db.get_all_table("USERS"))
+			end
+			if attached {WSF_STRING} request.query_parameter ("section") as s then
+				if s.same_string ("admin_add") then
+					--add new user in database
+
+				elseif s.same_string ("admin") then
+					--display all users
+
+				elseif s.same_string ("report") then
+				end
 			end
 		end
 
 	is_admin_page: BOOLEAN
-			--TODO: написать функцию, которая могла бы вернуть true, когда запрашивается страницы (.htlm) админа
-		do
+	do
 			Result := request.path_info.has_substring ("/admin")
 		end
 
 	analyse_request: BOOLEAN
-			--фича, код которой даёт возможность получить информацию из запроса, которую потом мы отправим в БД
-			--запрос для тестов
-			--http://localhost:8080/index.html?section=teaching&courses_note1=1&
-			--courses_note2=2&courses_note3=3&exams_note1=4&exams_note2=5&exams_note3=6&
-			--dip_note1=7&dip_note2=8&dip_note3=9&stud_note2=10&stud_note3=11&stud_note4=12&
-			--dipl_note1=13&dipl_note2=14&dipl_note3=15&submit=Send
 		local
 			section: STRING
 			user_id: INTEGER
 			report_id :INTEGER
 		do
 			Result := true
-				--TODO(BORIS): check cookies
-				--			across
-				--				request.query_parameters as q
-				--			loop
-
-				--				params.append ("%T"+ q.item.name + "=" + q.item.string_representation +"%N")
-				--			end
 
 			if attached {WSF_STRING} request.query_parameter ("section") as s then
 				section := s.string_representation
