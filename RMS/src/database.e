@@ -147,6 +147,31 @@ feature -- Initialization
 			db.close
 		end
 
+	get_report(report_id:INTEGER_32):STRING
+	local
+			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			query: STRING
+			a_row: SQLITE_RESULT_ROW
+			i: NATURAL
+		do
+			Result := ""
+			query := "SELECT REPORT_START, REPORT_END FROM USERS WHERE REPORT_ID = '" + report_id.out + "';"
+			print ("%N" + query)
+			create db.make_open_read_write (db_path)
+			create db_query_statement.make (query, db)
+			l_query_result_cursor := db_query_statement.execute_new
+			if l_query_result_cursor.after then
+				print ("No searching user user")
+			else
+				i := 1
+				a_row := l_query_result_cursor.item
+				Result := a_row.string_value (i) + "_"
+				i := i + 1
+				Result.append (a_row.string_value (i))
+			end
+			db.close
+		end
+
 	get_user_id_by_name (name: STRING): INTEGER
 		local
 			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR

@@ -61,7 +61,11 @@ feature -- Execution
 
 	do_admin_doings()
 	local
+		tmp:STRING
+		ids: ARRAY[INTEGER_32]
+		index:INTEGER
 		do
+			tmp:=""
 			--1. определить какая информация требуется
 			if request.path_info.ends_with ("admin.html") then
 				response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_all_table ("USERS")))
@@ -70,11 +74,25 @@ feature -- Execution
 			if attached {WSF_STRING} request.query_parameter ("section") as s then
 				if s.same_string ("admin_add") then
 					--add new user in database
-
+					if attached {WSF_STRING} request.query_parameter ("user_name") as name and then attached {WSF_STRING} request.query_parameter ("user_lab") as lab then
+						db.add_user (name.string_representation, lab.string_representation)
+					end
 				elseif s.same_string ("admin") then
-					--display all users
-
+					--display all user reports
+					if attached {WSF_STRING} request.query_parameter ("user_id") as user_id then
+						ids := db.get_user_reports (user_id.integer_value)
+						from
+							index:=1
+						until
+							index > ids.count
+						loop
+							tmp.append (db.get_report(ids[index]).out + "|")
+							index:=index+1
+						end
+						response.add_cookie (create {WSF_COOKIE}.make ("admin_data", tmp))
+					end
 				elseif s.same_string ("report") then
+					--display all report fields
 				end
 			end
 		end
