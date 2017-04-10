@@ -48,6 +48,22 @@ $(document).ready(function(){
 $(window).keypress(function(ev) {
 	isEventHappend = false;
 
+
+	/*Добавить профессора*/
+
+	$(".prof_name").keypress(function(e) {
+		if (e.keyCode == 13) {
+			if (!isEventHappend) {
+			$("#courses_data").attr('class', 'fixed_div');
+			$("#courses_data").append('<p id="courses_index_' + courses_index + '""><input type="text" class="post" name="prof_name' + courses_index + '" id="data' + courses_index + '" value="' + $("#courses_note_" + courses_index).val() + '"><a href="javascript:$(\'#courses_index_' + courses_index + '\').remove()"> X <\/a>' + '<\/p>');
+			courses_index += 1;
+			$("#courses").html('<p class="prof_name' + courses_index + '"><\/p>');
+			$('.prof_name' + courses_index).html('<p><input type="text" size="20" id="prof_name' + courses_index + '" class="prof_name" placeholder="Write here and press Enter"></p>').find('input').focus();
+			isEventHappend = true;
+		}};
+	});
+
+
 	/*Мои курсы*/
 
 	$(".courses_note").keypress(function(e) {
