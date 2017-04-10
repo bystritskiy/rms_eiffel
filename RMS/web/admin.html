@@ -11,6 +11,18 @@
 	<script type="text/javascript">
 
 		function manage_cookie() {
+				var input = getCookie('admin_data')
+				var array = input.split("|")
+				var full = [];
+
+// for (var i = 0; i < array.lenght - 3; i+=3) {
+// 	array[i]= 
+// 	array[i+1]=
+// 	array[i+2]=
+// }
+				alert(array[0])
+				alert(array[1])
+				alert(array[2])
 			//document.getElementById('lab_name').innerHTML = getCookie('admin_data');
 		}
 
@@ -44,21 +56,13 @@
 
 			<span class="block_title">All Professors:</span>
 
-			
-
-			<li id="lab_name" class="b2_content_item1 content_items">##lab_name##</li>
-
 			<form method="get" action="admin_reports.html"> 
+
 				<input type="hidden" name="section" value="admin">
+
 				<li class="b2_content_item1 content_items"><p><input type="submit" name="user_id1" value="prof_name1, lab_name1"></p></li>
 				<li class="b2_content_item2 content_items"><p><input type="submit" name="user_id2" value="prof_name2, lab_name2"></p></li>
 				<li class="b2_content_item3 content_items"><p><input type="submit" name="user_id3" value="prof_name3, lab_name3"></p></li>
-				<li class="b2_content_item4 content_items"><p><input type="submit" name="user_id3" value=##lab_name##></p></li>
-
-				<script type="text/javascript">
-				var array= "##lab_name##".split("|")
-				alert(array[1])
-				</script>
 
 			</form>
 		</div>
