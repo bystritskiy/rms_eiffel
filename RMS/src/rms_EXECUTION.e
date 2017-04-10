@@ -25,6 +25,9 @@ feature -- Execution
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do
 			create db.make
+--			db.display_table ("USERS")
+--			db.display_table ("REPORTS")
+--			db.display_table ("REPORTS_CONTENT")
 			print (get_file_name + " FILE%N")
 				--localhost:8080/
 			if request.path_info.is_case_insensitive_equal_general ("/") then
@@ -74,7 +77,7 @@ feature -- Execution
 			if attached {WSF_STRING} request.query_parameter ("section") as s then
 				if s.same_string ("admin_add") then
 					--add new user in database
-					if attached {WSF_STRING} request.query_parameter ("user_name") as name and then attached {WSF_STRING} request.query_parameter ("user_lab") as lab then
+					if attached {WSF_STRING} request.query_parameter ("name") as name and then attached {WSF_STRING} request.query_parameter ("lab") as lab then
 						db.add_user (name.string_representation, lab.string_representation)
 					end
 				elseif s.same_string ("admin") then
@@ -99,8 +102,8 @@ feature -- Execution
 
 	is_admin_page: BOOLEAN
 	do
-			Result := request.path_info.has_substring ("/admin")
-		end
+		Result := request.path_info.has_substring ("/admin")
+	end
 
 	analyse_request: BOOLEAN
 		local

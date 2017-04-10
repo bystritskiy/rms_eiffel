@@ -11,7 +11,7 @@
 	<script type="text/javascript">
 
 		function manage_cookie() {
-			document.getElementById('lab_name').innerHTML = getCookie('admin_data');
+			//document.getElementById('lab_name').innerHTML = getCookie('admin_data');
 		}
 
 		// возвращает cookie с именем name, если есть, если нет, то undefined
@@ -49,7 +49,7 @@
 			<li id="lab_name" class="b2_content_item1 content_items">##lab_name##</li>
 
 			<form method="get" action="admin_reports.html"> 
-
+				<input type="hidden" name="section" value="admin">
 				<li class="b2_content_item1 content_items"><p><input type="submit" name="user_id1" value="prof_name1, lab_name1"></p></li>
 				<li class="b2_content_item2 content_items"><p><input type="submit" name="user_id2" value="prof_name2, lab_name2"></p></li>
 				<li class="b2_content_item3 content_items"><p><input type="submit" name="user_id3" value="prof_name3, lab_name3"></p></li>
