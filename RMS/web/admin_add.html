@@ -10,18 +10,28 @@
 	<link rel="stylesheet" href="css/fixed_nav_menu.css">
 	<link rel="stylesheet" href="css/forms_style.css">
 </head>
+
+
+
 <body>
 	
-
-	<i class="fx_nav_menu_bttn fa fa-angle-down" aria-hidden="true"></i>
-
-
 	<div class="page_title">Add a new professor in Database</div>
 	
 	<div class="block">
-		
-		
 
+			<form id="form" name="form" method="get" action="index.html">
+			<input type="hidden" name="section" value="education" >
+		
+			<div class="block_title">Enter the ID:</div>
+
+			<div id="stud">
+				<p class="stud_note_1"><input class="stud_note" id="stud_note_1" name="stud_note_1" size="20" type="text"></p>
+			</div>
+			<div id="stud_data"></div>
+			
+			
+		</form>
+		
 		<form id="form" name="form" method="get" action="index.html">
 			<input type="hidden" name="section" value="education" >
 		
@@ -32,9 +42,23 @@
 			</div>
 			<div id="stud_data"></div>
 			
-			<input class="submit_bttn" name="submit" type="submit" value="Send" onclick="disable_inputs()">
 			
 		</form>
+
+				<form id="form" name="form" method="get" action="index.html">
+			<input type="hidden" name="section" value="education" >
+		
+			<div class="block_title">Enter professor subject:</div>
+
+			<div id="stud">
+				<p class="stud_note_1"><input class="stud_note" id="stud_note_1" name="stud_note_1" size="20" type="text"></p>
+			</div>
+			<div id="stud_data"></div>
+			
+			
+		</form>
+
+			<input class="submit_bttn" name="submit" type="submit" value="Send" onclick="disable_inputs()">
 
 	</div>
 	
