@@ -9,49 +9,51 @@
 	<link rel="stylesheet" href="css/main.css">
 
 	<script type="text/javascript">
-	    function manage_cookie() {
-		   document.getElementById('lab_name').innerHTML = getCookie('lab_name');
-		   document.getElementById('professor_name').innerHTML = getCookie('user_name');
-		   document.getElementById('report_period').innerHTML = '' + getCookie('report_start') + ' to ' + getCookie('report_end');
+		function manage_cookie() {
+			document.getElementById('lab_name').innerHTML = getCookie('lab_name');
+			document.getElementById('professor_name').innerHTML = getCookie('user_name');
+			document.getElementById('report_period').innerHTML = '' + getCookie('report_start') + ' to ' + getCookie('report_end');
 		}
 
 		// возвращает cookie с именем name, если есть, если нет, то undefined
 		function getCookie(name) {
-		  var matches = document.cookie.match(new RegExp(
-		    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-		  ));
-		  return matches ? decodeURIComponent(matches[1]) : undefined;
+			var matches = document.cookie.match(new RegExp(
+				"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+				));
+			return matches ? decodeURIComponent(matches[1]) : undefined;
 		}
-  </script>
+	</script>
 
-<script type="text/javascript">
-  	function toSendReport() {
-    if (confirm("Do you confirm sending the report?")) {
-    	alert("Thank you! Your report has been submitted.");
-        return true;
-    } else {
-    return false;
-    }
-}
-</script>
+	<script type="text/javascript">
+		function toSendReport() {
+			if (confirm("Do you confirm sending the report?")) {
+				alert("Thank you! Your report has been submitted.");
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
 
-<style>
-a.button7 {
-  font-weight: 700;
-  color: white;
-  text-decoration: none;
-  padding: .8em 1em calc(.8em + 3px);
-  border-radius: 3px;
-  background: rgb(64,199,129);
-  box-shadow: 0 -3px rgb(53,167,110) inset;
-  transition: 0.2s;
-} 
-a.button7:hover { background: rgb(53, 167, 110); }
-a.button7:active {
-  background: rgb(33,147,90);
-  box-shadow: 0 3px rgb(33,147,90) inset;
-}
- </style>
+	<style>
+		a.button7 {
+			font-weight: 700;
+			width: 230px;
+			height: 300px;
+			color: white;
+			text-decoration: none;
+			padding: .8em 1em calc(.8em + 3px);
+			border-radius: 3px;
+			background: rgb(64,199,129);
+			box-shadow: 0 -3px rgb(53,167,110) inset;
+			transition: 0.2s;
+		} 
+		a.button7:hover { background: rgb(53, 167, 110); }
+		a.button7:active {
+			background: rgb(33,147,90);
+			box-shadow: 0 3px rgb(33,147,90) inset;
+		}
+	</style>
 
 
 </head>
@@ -157,12 +159,12 @@ a.button7:active {
 		</a>
 
 
-		<div class="block7"><a href="#" class="button7">To send the report</a></div>
-
-
-
-		<input id="b1" value="Нажми Меня" onclick="alert('Спасибо!');" type="button7"/>
-
+		<div class="block7">
+			<ul class="block7_content">
+				<li class="b7_content_item1 content_items"><a href="#" class="button7">To send the report</a>
+				</li>
+			</ul>
+		</div>
 
 	</div>
 

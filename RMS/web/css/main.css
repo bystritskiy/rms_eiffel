@@ -27,7 +27,7 @@
 }
 .block1_content{
 	position: relative;
-	top: 30%;
+	top: 20%;
 	text-align: left;
 	margin-left: 20px;
 	margin-right: 20px;
@@ -35,7 +35,6 @@
 	text-align: center;
 }
 .b1_content_item1{
-
 }
 .b1_content_item2{
 	margin-top: 10px;
@@ -56,7 +55,7 @@
 }
 .block2_content{
 	position: relative;
-	top: 24%;
+	top: 20%;
 	text-align: left;
 	margin-left: 40px;
 	margin-right: 40px;
@@ -90,7 +89,7 @@
 }
 .block3_content{
 	position: relative;
-	top: 19%;
+	top: 20%;
 	text-align: left;
 	margin-left: 40px;
 	margin-right: 40px;
@@ -124,7 +123,7 @@
 }
 .block4_content{
 	position: relative;
-	top: 30%;
+	top: 20%;
 	text-align: left;
 	margin-left: 40px;
 	margin-right: 40px;
@@ -149,7 +148,7 @@
 }
 .block5_content{
 	position: relative;
-	top: 30%;
+	top: 20%;
 	text-align: left;
 	margin-left: 40px;
 	margin-right: 40px;
@@ -178,7 +177,7 @@
 }
 .block6_content{
 	position: relative;
-	top: 26%;
+	top: 20%;
 	text-align: left;
 	margin-left: 40px;
 	margin-right: 40px;
@@ -204,11 +203,14 @@
 }
 .block7_content_span{
 	position: relative;
-	top: 18%;
+	top: 20%;
 	margin-left: 40px;
 	margin-right: 40px;
 	font-size: 15px;
 	text-align: justify;
+}
+.b7_content_item1{
+
 }
 /*Блок 8 и его содержимое*/
 .block8{
