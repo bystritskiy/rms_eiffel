@@ -110,6 +110,30 @@ feature -- Initialization
 			end
 		end
 
+	get_lab_name_by_id(user_id:INTEGER):STRING
+		local
+			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			query: STRING
+			a_row: SQLITE_RESULT_ROW
+			i: NATURAL
+			index: INTEGER
+		do
+			Result := "unknown_lab"
+			query := "SELECT UNIT FROM USERS WHERE USER_ID = '" + user_id.out + "';"
+			print ("%N" + query)
+			create db.make_open_read_write (db_path)
+			create db_query_statement.make (query, db)
+			l_query_result_cursor := db_query_statement.execute_new
+			if l_query_result_cursor.after then
+				print ("No searching user user")
+			else
+				i := 1
+				a_row := l_query_result_cursor.item
+				Result := a_row.string_value (i)
+			end
+			db.close
+		end
+
 	get_user_reports (user_id: INTEGER): ARRAY [INTEGER]
 		local
 			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
