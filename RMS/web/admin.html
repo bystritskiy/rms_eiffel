@@ -7,22 +7,27 @@
 	<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/common.css">
 	<link rel="stylesheet" href="css/admin.css">
+
 	<script type="text/javascript">
-	    function manage_cookie() {
-		   document.getElementById('lab_name').innerHTML = getCookie('admin_data');
+
+		function manage_cookie() {
+			document.getElementById('lab_name').innerHTML = getCookie('admin_data');
 		}
 
 		// возвращает cookie с именем name, если есть, если нет, то undefined
 		function getCookie(name) {
-		  var matches = document.cookie.match(new RegExp(
-		    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-		  ));
-		  return matches ? decodeURIComponent(matches[1]) : undefined;
+			var matches = document.cookie.match(new RegExp(
+				"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+				));
+			return matches ? decodeURIComponent(matches[1]) : undefined;
 		}
-  </script>
+	</script>
 
 </head>
+
+
 <body onload="manage_cookie()">
+
 	<div class="container">
 
 		<div class="block1">
@@ -35,8 +40,29 @@
 		</div>
 
 
+		<div class="block2">
+
+			<span class="block_title">All Professors:</span>
+
+			
+
+			<li id="lab_name" class="b2_content_item1 content_items">##lab_name##</li>
+
+			<form method="get" action="admin_reports.html"> 
+
+				<li class="b2_content_item1 content_items"><p><input type="submit" name="user_id1" value="prof_name1, lab_name1"></p></li>
+				<li class="b2_content_item2 content_items"><p><input type="submit" name="user_id2" value="prof_name2, lab_name2"></p></li>
+				<li class="b2_content_item3 content_items"><p><input type="submit" name="user_id3" value="prof_name3, lab_name3"></p></li>
+				<li class="b2_content_item4 content_items"><p><input type="submit" name="user_id3" value=##lab_name##></p></li>
+
+				<script type="text/javascript">
+				var array= "##lab_name##".split("|")
+				alert(array[1])
+				</script>
 
 			</form>
+		</div>
+
 	</div>
 
 	<script src="libs/jquery-3.1.1.min.js"></script>
