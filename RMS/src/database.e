@@ -134,7 +134,7 @@ feature -- Initialization
 			db.close
 		end
 
-	get_user_reports (user_id: INTEGER): ARRAY [INTEGER]
+	get_user_reports_id (user_id: INTEGER): ARRAY [INTEGER]
 		local
 			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
 			query: STRING
@@ -171,30 +171,7 @@ feature -- Initialization
 			db.close
 		end
 
-	get_report(report_id:INTEGER_32):STRING
-	local
-			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
-			query: STRING
-			a_row: SQLITE_RESULT_ROW
-			i: NATURAL
-		do
-			Result := ""
-			query := "SELECT REPORT_START, REPORT_END FROM USERS WHERE REPORT_ID = '" + report_id.out + "';"
-			print ("%N" + query)
-			create db.make_open_read_write (db_path)
-			create db_query_statement.make (query, db)
-			l_query_result_cursor := db_query_statement.execute_new
-			if l_query_result_cursor.after then
-				print ("No searching user user")
-			else
-				i := 1
-				a_row := l_query_result_cursor.item
-				Result := a_row.string_value (i) + "_"
-				i := i + 1
-				Result.append (a_row.string_value (i))
-			end
-			db.close
-		end
+
 
 	get_user_id_by_name (name: STRING): INTEGER
 		local
@@ -215,6 +192,94 @@ feature -- Initialization
 				i := 1
 				a_row := l_query_result_cursor.item
 				Result := a_row.integer_value (i)
+			end
+			db.close
+		end
+
+	get_report_period(report_id:INTEGER_32):STRING
+	local
+			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			query: STRING
+			a_row: SQLITE_RESULT_ROW
+			i: NATURAL
+		do
+			Result := ""
+			query := "SELECT REPORT_START, REPORT_END FROM USERS WHERE REPORT_ID = '" + report_id.out + "';"
+			print ("%N" + query)
+			create db.make_open_read_write (db_path)
+			create db_query_statement.make (query, db)
+			l_query_result_cursor := db_query_statement.execute_new
+			if l_query_result_cursor.after then
+				print ("No searching user user")
+			else
+				Result:= report_id.out + "|"
+				i := 1
+				a_row := l_query_result_cursor.item
+				Result.append(a_row.string_value (i) + "|")
+				i := i + 1
+				Result.append (a_row.string_value (i) + "|")
+			end
+			db.close
+		end
+
+	get_all_user_reports(user_id:INTEGER):STRING
+	local
+			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			query: STRING
+			a_row: SQLITE_RESULT_ROW
+			i: NATURAL
+			index: INTEGER
+			ids: ARRAY[INTEGER_32]
+		do
+			Result:=""
+			create db.make_open_read_write (db_path)
+			ids:=get_user_reports_id (user_id)
+			from
+				index := 1
+			until
+				index > ids.count
+			loop
+				Result.append (get_report_period(ids.at (index)))
+				index:=index + 1
+			end
+			print("All user reports >>> " + Result + " <<<%N")
+		end
+
+	get_report(report_id:INTEGER):STRING
+	local
+			l_query_result_cursor: SQLITE_STATEMENT_ITERATION_CURSOR
+			i: NATURAL
+			a_row: SQLITE_RESULT_ROW
+		do
+			Result:=""
+--			print ("%Ndisplay " + table_name + "%N")
+			create db.make_open_read_write (db_path)
+				--			create Result.make_empty
+			create db_query_statement.make ("SELECT * FROM REPORTS_CONTENT WHERE REPORT_ID = '" + report_id.out + "';", db)
+				--			create db_query_statement.make ("SELECT * FROM REPORTS_CONTENT WHERE REPORT_ID='" + report_id.out + "';", db)
+			l_query_result_cursor := db_query_statement.execute_new
+			if l_query_result_cursor.after then
+				Result:="Error while quering table"
+					--				Result := Void
+			else
+					l_query_result_cursor.start
+					from
+						i := 1
+						a_row := l_query_result_cursor.item
+							--create Result.make_filled ("", i.as_integer_32, a_row.count.as_integer_32)
+					until
+						i > a_row.count
+					loop
+						if a_row.value (i) /= Void then
+							Result.append(a_row.value (i).out + "|") -- enter
+								--print("index>" + i.out)
+								--Result.put (a_row.value (i).out, i.as_integer_32)
+						end
+--						io.new_line
+						i := i + 1
+					end
+					l_query_result_cursor.forth
+				l_query_result_cursor.start
 			end
 			db.close
 		end
@@ -249,9 +314,6 @@ feature -- Initialization
 					until
 						i > a_row.count
 					loop
---						print ("Column Name: ")
-						Result.append (a_row.column_name (i) + "_") -- space
-
 						if a_row.value (i) /= Void then
 							Result.append(a_row.value (i).out + "|") -- enter
 								--print("index>" + i.out)

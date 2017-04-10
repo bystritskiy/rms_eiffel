@@ -36,7 +36,6 @@
 		<variable name="httpd_ssl_disabled" value="true"/>
 		<library name="default_standalone" location="$ISE_LIBRARY\contrib\library\web\framework\ewf\wsf\default\standalone-safe.ecf"/>
 		<library name="sqlite" location="$ISE_LIBRARY\unstable\library\persistency\database\sqlite3\sqlite.ecf"/>
-		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
 		<cluster name="launcher" location=".\launcher\">
 			<cluster name="default_launcher" location="$|default\"/>
 		</cluster>

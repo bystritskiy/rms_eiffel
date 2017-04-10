@@ -40,12 +40,14 @@ feature -- Execution
 			elseif request.path_info.ends_with (".js") then
 				create {WSF_FILE_RESPONSE} mesg.make_with_content_type ({HTTP_MIME_TYPES}.text_css, "web\js\" + get_file_name)
 					--html web pages
-			elseif request.path_info.ends_with (".html") then
+			elseif request.path_info.has_substring (".html") then
 				if is_admin_page then
 						--TODO: admin
+						print("IM admin1%N")
 					do_admin_doings()
 					create {WSF_FILE_RESPONSE} mesg.make_with_content_type ({HTTP_MIME_TYPES}.text_html, "web\" + get_file_name)
 				else
+					print("IM prof%N")
 					if analyse_request then
 						create {WSF_FILE_RESPONSE} mesg.make_with_content_type ({HTTP_MIME_TYPES}.text_html, "web\" + get_file_name)
 					else
@@ -68,36 +70,51 @@ feature -- Execution
 		ids: ARRAY[INTEGER_32]
 		index:INTEGER
 		do
+			print("IM admin. do admin_doings%N")
 			tmp:=""
-			--1. определить какая информация требуется
-			if request.path_info.ends_with ("admin.html") then
+			if request.path_info.has_substring ("admin.html") then
 				response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_all_table ("USERS")))
+				print("IM admin. add cookie info%N")
 				print(db.get_all_table("USERS"))
 			end
 			if attached {WSF_STRING} request.query_parameter ("section") as s then
 				if s.same_string ("admin_add") then
 					--add new user in database
 					if attached {WSF_STRING} request.query_parameter ("name") as name and then attached {WSF_STRING} request.query_parameter ("lab") as lab then
+						print("IM admin. add new user%N")
 						db.add_user (name.string_representation, lab.string_representation)
 					end
 				elseif s.same_string ("admin") then
 					--display all user reports
-					if attached {WSF_STRING} request.query_parameter ("user_id") as user_id then
-						ids := db.get_user_reports (user_id.integer_value)
-						from
-							index:=1
-						until
-							index > ids.count
-						loop
-							tmp.append (db.get_report(ids[index]).out + "|")
-							index:=index+1
+					across request.query_parameters as q
+					loop
+						if q.item.name.has_substring ("user_id") then
+							tmp := q.item.name
+							tmp.replace_substring_all ("user_id", "")
+							response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_all_user_reports (tmp.to_integer)))
+							print("IM admin. add cookie info about reports%N")
+--							print(db.get_all_user_reports (user_id.integer_value) + "%N")
 						end
-						response.add_cookie (create {WSF_COOKIE}.make ("admin_data", tmp))
+--					params.append ("%T"+ q.item.name + "=" + q.item.string_representation +"%N")
 					end
 				elseif s.same_string ("report") then
-					--display all report fields
+					across request.query_parameters as q
+					loop
+						if q.item.name.has_substring ("report_id") then
+							tmp := q.item.name
+							tmp.replace_substring_all ("report_id", "")
+							response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_report (tmp.to_integer)))
+						end
+--					params.append ("%T"+ q.item.name + "=" + q.item.string_representation +"%N")
+					end
+					print("IM admin. add cookie report%N")
+				else
+					print("IM admin. WARINING!!!!!!!!!!!!!!! IM do NOTHING!!!!!!!!!!!!!!!!%N")
 				end
+			else
+				print("IM admin. WARINING!!!!!!!!!!!!!!! IM do NOTHING BECAUSE NO SECTION!!!!!!!!!!!!!!!!%N")
 			end
+			print("IM admin. I end my doings%N")
 		end
 
 	is_admin_page: BOOLEAN
