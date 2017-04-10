@@ -194,7 +194,7 @@
 /*Блок 7 и его содержимое*/
 .block7{
 	position: absolute;
-	width: 230px;
+	width: 470px;
 	height: 300px;
 	margin-top: 310px;
 	margin-left: 480px;
@@ -221,3 +221,4 @@
 	border-radius: 15px;
 	text-align: center;
 }
+

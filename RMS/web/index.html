@@ -23,6 +23,37 @@
 		  return matches ? decodeURIComponent(matches[1]) : undefined;
 		}
   </script>
+
+<script type="text/javascript">
+  	function toSendReport() {
+    if (confirm("Do you confirm sending the report?")) {
+    	alert("Thank you! Your report has been submitted.");
+        return true;
+    } else {
+    return false;
+    }
+}
+</script>
+
+<style>
+a.button7 {
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  padding: .8em 1em calc(.8em + 3px);
+  border-radius: 3px;
+  background: rgb(64,199,129);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+} 
+a.button7:hover { background: rgb(53, 167, 110); }
+a.button7:active {
+  background: rgb(33,147,90);
+  box-shadow: 0 3px rgb(33,147,90) inset;
+}
+ </style>
+
+
 </head>
 <body onload="manage_cookie()">
 	
@@ -116,32 +147,21 @@
 		</a>
 
 		<a href="external_activities.html">
-
 			<div class="block6">
-
 				<span class="block_title">Outdoor activities</span>
-
 				<ul class="block6_content">
 					<li class="b5_content_item1 content_items">Industry</li>
 					<li class="b5_content_item2 content_items">Other</li>
 				</ul>
-
 			</div>
-
-
 		</a>
 
-		<a href="other.html">
 
-			<div class="block7">
+		<div class="block7"><a href="#" class="button7">To send the report</a></div>
 
-				<span class="block_title">Send report</span>
 
-				<p class="block7_content_span content_items">Here will be BUTTON "TO SEND REPORT"</p>
 
-			</div>
-
-		</a>
+		<input id="b1" value="Нажми Меня" onclick="alert('Спасибо!');" type="button7"/>
 
 
 	</div>

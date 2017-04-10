@@ -29,19 +29,20 @@
 	position: relative;
 	top: 30%;
 	text-align: left;
-	margin-left: 20px;
-	margin-right: 20px;
+	margin-left: 40px;
+	margin-right: 40px;
 	font-size: 17px;
 	text-align: center;
 }
 .b1_content_item1{
-
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 .b1_content_item2{
-	margin-top: 10px;
-}
-.b1_content_item3{
-	margin-top: 10px;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 /*Блок 2 и его содержимое*/
@@ -64,7 +65,9 @@
 	text-align: center;
 }
 .b2_content_item1{
-	margin-top: 10px;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 .b2_content_item2{
 	margin-top: 10px;
