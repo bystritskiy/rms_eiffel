@@ -377,7 +377,6 @@ feature {NONE}
 			--use it if UPDATE query
 		do
 			db.open_read_write
-			query.replace_substring_all ("'", "?")
 			print ("%N" + query)
 			create db_modify_statement.make (query, db)
 			db_modify_statement.execute
