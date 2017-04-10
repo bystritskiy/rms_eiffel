@@ -193,7 +193,7 @@
 /*Блок 7 и его содержимое*/
 .block7{
 	position: absolute;
-	width: 470px;
+	width: 230px;
 	height: 300px;
 	margin-top: 310px;
 	margin-left: 480px;
@@ -212,15 +212,32 @@
 .b7_content_item1{
 
 }
-/*Блок 8 и его содержимое*/
-.block8{
-	position: absolute;
+
+
+.myButton {
+	background-color:#ffffff;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	border-radius:15px;
+	border:0px solid #000;
+	display:inline-block;
+	cursor:pointer;
+	color:#030003;
+	font-family:Arial;
+	font-size:19px;
+	font-weight:bold;
 	width: 230px;
 	height: 300px;
-	margin-top: 310px;
-	margin-left: 720px;
-	border: 2px solid #000;
-	border-radius: 15px;
 	text-align: center;
+
+
+}
+.myButton:hover {
+	background-color:#adffc0;
+}
+.myButton:active {
+	position:absolute;
+	top:2px;
 }
 
+        
