@@ -122,6 +122,7 @@ feature -- Execution
 						if user_id > 0 then
 							response.add_cookie (create {WSF_COOKIE}.make ("user_id", user_id.out))
 							response.add_cookie (create {WSF_COOKIE}.make ("user_name", name.string_representation))
+							response.add_cookie (create {WSF_COOKIE}.make ("lab_name", db.get_lab_name_by_id(user_id)))
 						else
 								--no user in database
 								print("!!!No user in database%N")
@@ -143,6 +144,8 @@ feature -- Execution
 								if attached {WSF_STRING} request.query_parameter ("report_start") as start and then attached {WSF_STRING} request.query_parameter ("report_end") as rep_end then
 									report_id := db.get_report_id_or_create (user_id, start.string_representation, rep_end.string_representation)
 									response.add_cookie (create {WSF_COOKIE}.make ("report_id", report_id.out))
+									response.add_cookie (create {WSF_COOKIE}.make ("report_start", start.string_representation))
+									response.add_cookie (create {WSF_COOKIE}.make ("report_end", rep_end.string_representation))
 									print("%N%Nadded cookie report_id=" + report_id.out + "%N%N")
 								else
 									--have not needed parameters
