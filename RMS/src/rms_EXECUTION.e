@@ -123,6 +123,7 @@ feature -- Execution
 							response.add_cookie (create {WSF_COOKIE}.make ("user_id", user_id.out))
 							response.add_cookie (create {WSF_COOKIE}.make ("user_name", name.string_representation))
 							response.add_cookie (create {WSF_COOKIE}.make ("lab_name", db.get_lab_name_by_id(user_id)))
+							print("cookie added^ lab name + user name")
 						else
 								--no user in database
 								print("!!!No user in database%N")
@@ -146,7 +147,7 @@ feature -- Execution
 									response.add_cookie (create {WSF_COOKIE}.make ("report_id", report_id.out))
 									response.add_cookie (create {WSF_COOKIE}.make ("report_start", start.string_representation))
 									response.add_cookie (create {WSF_COOKIE}.make ("report_end", rep_end.string_representation))
-									print("%N%Nadded cookie report_id=" + report_id.out + "%N%N")
+									print("%N%Ncookie added report_id=" + report_id.out + " also report_start + report_end%N%N")
 								else
 									--have not needed parameters
 									Result:=false
