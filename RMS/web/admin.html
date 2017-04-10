@@ -11,20 +11,42 @@
 	<script type="text/javascript">
 
 		function manage_cookie() {
-				var input = getCookie('admin_data')
-				var array = input.split("|")
-				var full = [];
+			var input = getCookie('admin_data')
+			var array = input.split("|")
+			alert( document.cookie );
 
-// for (var i = 0; i < array.lenght - 3; i+=3) {
-// 	array[i]= 
-// 	array[i+1]=
-// 	array[i+2]=
-// }
-				alert(array[0])
-				alert(array[1])
-				alert(array[2])
+			// for (var i = 0; i < array.lenght - 3; i+=3) {
+			// 	$("prof_data").append(array[0],array[1],array[2])
+			// }
+
+
+			// FOR TEST:
+			// alert(array[0])
+			// alert(array[1])
+			// alert(array[2])
 			//document.getElementById('lab_name').innerHTML = getCookie('admin_data');
 		}
+
+		function getMyCookie(name) {
+			var cookie = " " + document.cookie;
+			var search = " " + name + "=";
+			var setStr = null;
+			var offset = 0;
+			var end = 0;
+			if (cookie.length > 0) {
+				offset = cookie.indexOf(search);
+				if (offset != -1) {
+					offset += search.length;
+					end = cookie.indexOf(";", offset)
+					if (end == -1) {
+						end = cookie.length;
+					}
+					setStr = unescape(cookie.substring(offset, end));
+				}
+			}
+			return(setStr);
+		}
+
 
 		// возвращает cookie с именем name, если есть, если нет, то undefined
 		function getCookie(name) {
@@ -60,9 +82,11 @@
 
 				<input type="hidden" name="section" value="admin">
 
-				<li class="b2_content_item1 content_items"><p><input type="submit" name="user_id1" value="prof_name1, lab_name1"></p></li>
-				<li class="b2_content_item2 content_items"><p><input type="submit" name="user_id2" value="prof_name2, lab_name2"></p></li>
-				<li class="b2_content_item3 content_items"><p><input type="submit" name="user_id3" value="prof_name3, lab_name3"></p></li>
+				<script type="text/javascript">
+					myVar = getMyCookie("admin_data")
+					alert(myVar)
+				</script>
+				<li class="b2_content_item1 content_items"><p><input type="submit" name="$('#prof_data')" value="myVar, myVar"></p></li>
 
 			</form>
 		</div>
