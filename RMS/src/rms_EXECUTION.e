@@ -31,7 +31,6 @@ feature -- Execution
 			print (get_file_name + " FILE%N")
 				--localhost:8080/
 			if request.path_info.is_case_insensitive_equal_general ("/") then
-				db.add_user ("Login", "LIRS")
 				create {WSF_FILE_RESPONSE} mesg.make_with_content_type ({HTTP_MIME_TYPES}.text_html, "web\authorisation.html")
 					--css files
 			elseif request.path_info.ends_with (".css") then
@@ -97,12 +96,14 @@ feature -- Execution
 						end
 --					params.append ("%T"+ q.item.name + "=" + q.item.string_representation +"%N")
 					end
-				elseif s.same_string ("report") then
+				elseif s.same_string ("admin_report") then
+					print("IM admin. show all content of report%N")
 					across request.query_parameters as q
 					loop
 						if q.item.name.has_substring ("report_id") then
 							tmp := q.item.name
 							tmp.replace_substring_all ("report_id", "")
+							print(tmp + "%N")
 							response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_report (tmp.to_integer)))
 						end
 --					params.append ("%T"+ q.item.name + "=" + q.item.string_representation +"%N")
@@ -124,6 +125,7 @@ feature -- Execution
 
 	analyse_request: BOOLEAN
 		local
+			tmp:STRING
 			section: STRING
 			user_id: INTEGER
 			report_id :INTEGER
@@ -138,8 +140,12 @@ feature -- Execution
 						user_id := db.get_user_id_by_name (name.string_representation)
 						if user_id > 0 then
 							response.add_cookie (create {WSF_COOKIE}.make ("user_id", user_id.out))
-							response.add_cookie (create {WSF_COOKIE}.make ("user_name", name.string_representation))
-							response.add_cookie (create {WSF_COOKIE}.make ("lab_name", db.get_lab_name_by_id(user_id)))
+							tmp:=name.string_representation
+							tmp.replace_substring_all (" ", "+")
+							response.add_cookie (create {WSF_COOKIE}.make ("user_name", tmp))
+							tmp:=db.get_lab_name_by_id(user_id)
+							tmp.replace_substring_all (" ", "+")
+							response.add_cookie (create {WSF_COOKIE}.make ("lab_name", tmp))
 							print("cookie added^ lab name + user name")
 						else
 								--no user in database

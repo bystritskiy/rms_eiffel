@@ -7,16 +7,30 @@
 	<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/common.css">
 	<link rel="stylesheet" href="css/admin_report.css">
+	<style type="text/css">
+		
+		.myblock{
+	position: absolute;
+	margin-left: 478px;
+	margin-top: 60	px;
+	width: 500px;
+	height: 90%;
+	border: 2px solid #000;
+	border-radius: 15px;
+	text-align: center;
+}
+	</style>
 <script type="text/javascript">
 
 		function manage_cookie() {
 			var inp = getCookie('admin_data').replace("+", " ").split("|");
 			var div = document.getElementById('input_data');
+			
 
-			for (var i = 0; i < inp.length-3; i+=3) {
-				div.innerHTML = div.innerHTML + ('<p><input type="submit"  name="report_id' + inp[i] + '" value="' + inp[i+1] + ' - ' + inp[i+2] + '"><\/p>');
+			for (var i = 1; i < inp.length; i+=1) {
+				div.innerHTML = div.innerHTML + ('<p>'+ inp[i] +'<\/p>');
 			}
-	do_close();
+		do_close();
 		}
 
 		function do_close() {
@@ -36,25 +50,18 @@
 </head>
 <body onload="manage_cookie()">
 	
-	<div class="container">
-<div class="block1">
-		<p ><h2>All Professor reports:</h2></p>
+	<div class="myblock">
+		<div class="block">
+				<span ><h2>All Professor reports:</h2></span>
 
-			<form method="get" action="admin_report_content.html"> 
-
-				<input type="hidden" name="section" value="admin_report">
-				
-					<div id="input_data">
-					</div>
-				
-
-			</form>
-			<form method="post" action="admin.html">
-				<input type="submit" name="send" value="Back">
-			</form>
+					<form method="get" action="admin.html"> 
+							<div id="input_data">
+							</div>
+						<input type="submit" name="send" value="Back">
+					</form>
 
 
-	</div>
+		</div>
 	</div>
 
 	<script src="libs/jquery-3.1.1.min.js"></script>

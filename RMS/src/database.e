@@ -204,7 +204,7 @@ feature -- Initialization
 			i: NATURAL
 		do
 			Result := ""
-			query := "SELECT REPORT_START, REPORT_END FROM USERS WHERE REPORT_ID = '" + report_id.out + "';"
+			query := "SELECT REPORT_START, REPORT_END FROM REPORTS WHERE REPORT_ID = '" + report_id.out + "';"
 			print ("%N" + query)
 			create db.make_open_read_write (db_path)
 			create db_query_statement.make (query, db)
@@ -262,8 +262,7 @@ feature -- Initialization
 				Result:="Error while quering table"
 					--				Result := Void
 			else
-					l_query_result_cursor.start
-					from
+				from
 						i := 1
 						a_row := l_query_result_cursor.item
 							--create Result.make_filled ("", i.as_integer_32, a_row.count.as_integer_32)
@@ -271,17 +270,29 @@ feature -- Initialization
 						i > a_row.count
 					loop
 						if a_row.value (i) /= Void then
-							Result.append(a_row.value (i).out + "|") -- enter
+							Result.append(a_row.value (i).out)
 								--print("index>" + i.out)
 								--Result.put (a_row.value (i).out, i.as_integer_32)
 						end
---						io.new_line
+						Result.append("|")
 						i := i + 1
 					end
-					l_query_result_cursor.forth
-				l_query_result_cursor.start
-			end
+--					l_query_result_cursor.start
+
+--						i := 1
+--						a_row := l_query_result_cursor.item
+--							--create Result.make_filled ("", i.as_integer_32, a_row.count.as_integer_32)
+--						if a_row.value (i) /= Void then
+--							Result.append(a_row.value (i).out + "|") -- enter
+--							i := i + 1
+----							Result.append(a_row.value (i).out + "|")
+--						end
+--					end
+--					l_query_result_cursor.forth
+--				l_query_result_cursor.start
 			db.close
+			print("here result >>> " + Result + "%N")
+		end
 		end
 
 	get_all_table (table_name: STRING): STRING
@@ -319,9 +330,9 @@ feature -- Initialization
 								--print("index>" + i.out)
 								--Result.put (a_row.value (i).out, i.as_integer_32)
 						end
---						io.new_line
 						i := i + 1
 					end
+--					Result.append ("|")
 					l_query_result_cursor.forth
 				end
 				l_query_result_cursor.start

@@ -10,43 +10,23 @@
 	<script type="text/javascript">
 
 		function manage_cookie() {
-			var input = getCookie('admin_data')
-			var array = input.split("~") //разбеение по строкам
-			var array2 = array.split("|") //разбиение значений у 1 строки
+			var inp = getCookie('admin_data').replace("+", " ").split("|");
+			var div = document.getElementById('input_data');
+			
 
-			alert(input)
-			// for (var i = 0; i < array.lenght - 3; i+=3) {
-			// 	$("prof_data").append(array[0],array[1],array[2])
-			// }
-
-
-			// FOR TEST:
-			// alert(array[0])
-			// alert(array[1])
-			// alert(array[2])
-			//document.getElementById('lab_name').innerHTML = getCookie('admin_data');
+			for (var i = 0; i < inp.length-3; i+=3) {
+				div.innerHTML = div.innerHTML + ('<p><input type="submit"  name="user_id' + inp[i] + '" value="' + inp[i+1] + ', ' + inp[i+2] + '"><\/p>');
+				// alert(div.innerHTML)
+			}
+			do_close();
 		}
+			
 
-		// function getMyCookie(name) {
-		// 	var cookie = " " + document.cookie;
-		// 	var search = " " + name + "=";
-		// 	var setStr = null;
-		// 	var offset = 0;
-		// 	var end = 0;
-		// 	if (cookie.length > 0) {
-		// 		offset = cookie.indexOf(search);
-		// 		if (offset != -1) {
-		// 			offset += search.length;
-		// 			end = cookie.indexOf(";", offset)
-		// 			if (end == -1) {
-		// 				end = cookie.length;
-		// 			}
-		// 			setStr = unescape(cookie.substring(offset, end));
-		// 		}
-		// 	}
-		// 	return(setStr);
-		// }
-
+		function do_close() {
+			setCookie("admin_data", "", {
+			    expires: -1
+			  })
+		}
 
 		// возвращает cookie с именем name, если есть, если нет, то undefined
 		function getCookie(name) {
@@ -99,29 +79,24 @@
 
 		<div class="block1">
 
-			<span class="block_title">Admin panel</span>
+			<span class="block_title">Features</span>
 
 			<ul class="block1_content">
-				<li class="b1_content_item1 content_items"><a href="/admin_add.html"><u>To add prof</u></a></li>
+				<li class="b1_content_item1 content_items"><a href="/admin_add.html"><u>Add new professor in system</u></a></li>
 			</ul>
 		</div>
 
 
 		<div class="block2">
 
-			<span class="block_title">All Professors:</span>
+			<span ><h2>All Professors:</h2></span>
 
 			<form method="get" action="admin_reports.html"> 
 
 				<input type="hidden" name="section" value="admin">
 
-<!-- 				<script type="text/javascript">
-					myVar = getMyCookie("admin_data")
-					alert(myVar)
-				</script> -->
-
-				<li class="b2_content_item1 content_items"><p><input type="submit" name="$('#prof_data')" value="$('#prof_data'), $('#prof_data')"></p></li>
-
+					<div id="input_data">
+					</div>
 			</form>
 		</div>
 
