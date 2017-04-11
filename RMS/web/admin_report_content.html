@@ -23,9 +23,12 @@
 <script type="text/javascript">
 
 		function manage_cookie() {
-			var inp = getCookie('admin_data').replace("+", " ").split("|");
+			var tmp = getCookie('admin_data').replace("+", " ");
+			while(tmp.includes('+')) {
+				tmp = tmp.replace("+", " ");
+			}
+			inp = tmp.split("|");
 			var div = document.getElementById('input_data');
-			
 
 			for (var i = 1; i < inp.length; i+=1) {
 				div.innerHTML = div.innerHTML + ('<p>'+ inp[i] +'<\/p>');

@@ -10,7 +10,11 @@
 	<script type="text/javascript">
 
 		function manage_cookie() {
-			var inp = getCookie('admin_data').replace("+", " ").split("|");
+			var tmp = getCookie('admin_data').replace("+", " ");
+			while(tmp.includes('+')) {
+				tmp = tmp.replace("+", " ");
+			}
+			inp = tmp.split("|");
 			var div = document.getElementById('input_data');
 			
 

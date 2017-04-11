@@ -72,7 +72,9 @@ feature -- Execution
 			print("IM admin. do admin_doings%N")
 			tmp:=""
 			if request.path_info.has_substring ("admin.html") then
-				response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_all_table ("USERS")))
+				tmp:=db.get_all_table ("USERS")
+				tmp.replace_substring_all (" ", "+")
+				response.add_cookie (create {WSF_COOKIE}.make ("admin_data", tmp))
 				print("IM admin. add cookie info%N")
 				print(db.get_all_table("USERS"))
 			end
@@ -90,7 +92,9 @@ feature -- Execution
 						if q.item.name.has_substring ("user_id") then
 							tmp := q.item.name
 							tmp.replace_substring_all ("user_id", "")
-							response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_all_user_reports (tmp.to_integer)))
+							tmp:=db.get_all_user_reports (tmp.to_integer)
+							tmp.replace_substring_all (" ", "+")
+							response.add_cookie (create {WSF_COOKIE}.make ("admin_data", tmp))
 							print("IM admin. add cookie info about reports%N")
 --							print(db.get_all_user_reports (user_id.integer_value) + "%N")
 						end
@@ -104,7 +108,9 @@ feature -- Execution
 							tmp := q.item.name
 							tmp.replace_substring_all ("report_id", "")
 							print(tmp + "%N")
-							response.add_cookie (create {WSF_COOKIE}.make ("admin_data", db.get_report (tmp.to_integer)))
+							tmp:=db.get_report (tmp.to_integer)
+							tmp.replace_substring_all (" ", "+")
+							response.add_cookie (create {WSF_COOKIE}.make ("admin_data", tmp))
 						end
 --					params.append ("%T"+ q.item.name + "=" + q.item.string_representation +"%N")
 					end

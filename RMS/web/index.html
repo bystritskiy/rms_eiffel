@@ -13,7 +13,7 @@
 			document.getElementById('lab_name').innerHTML = getCookie('lab_name').replace("+", " ");
 			document.getElementById('professor_name').innerHTML = getCookie('user_name').replace("+", " ");
 			document.getElementById('report_period').innerHTML = '' + getCookie('report_start') + ' to ' + getCookie('report_end');
-
+		}
 		// возвращает cookie с именем name, если есть, если нет, то undefined
 		function getCookie(name) {
 			var matches = document.cookie.match(new RegExp(
