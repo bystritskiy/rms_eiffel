@@ -1,5 +1,5 @@
 # rms_eiffel
-Report Management System (Eiffel Project)
+**R**eport **M**anagement **S**ystem (Eiffel Project)
 
 by Bystritsky Bogdan, 
 Boris Guryev, 
