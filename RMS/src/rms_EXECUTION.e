@@ -25,6 +25,7 @@ feature -- Execution
 			not_found: WSF_NOT_FOUND_RESPONSE
 		do
 			create db.make
+			db.display_table ("REPORTS_CONTENT")
 --			db.display_table ("USERS")
 --			db.display_table ("REPORTS")
 --			db.display_table ("REPORTS_CONTENT")
@@ -260,7 +261,7 @@ manage_research(report_id:INTEGER):BOOLEAN
 					end
 --					params.append ("%T"+ q.item.name + "=" + q.item.string_representation +"%N")
 				end
-				db.add_teaching (report_id, grants,projects,collaborations,conference,journal)
+				db.add_reaserch (report_id, grants,projects,collaborations,conference,journal)
 			end
 
 --
