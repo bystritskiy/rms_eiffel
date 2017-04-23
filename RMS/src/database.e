@@ -38,6 +38,7 @@ feature -- Initialization
 		do
 			query := "INSERT INTO USERS( NAME, UNIT) values('" + name + "','" + unit + "');"
 			invoke_insert_statement (query)
+			print(query)
 		end
 
 	add_teaching (report_id: INTEGER; courses, examinations, supervised, reports, phd_theses: STRING)
@@ -47,6 +48,7 @@ feature -- Initialization
 		do
 			query := "UPDATE REPORTS_CONTENT SET COURSES = '" + courses + "', EXAMINATIONS = '" + examinations + "', SUPERVISED = '" + supervised + "', REPORTS = '" + reports + "', PHD_THESES = '" + phd_theses + "' WHERE REPORT_ID = " + report_id.out + " ;"
 			invoke_update_statement (query)
+			print(query)
 		end
 
 	add_reaserch (report_id: INTEGER; grants, projects, collaborations, conference, journal: STRING)
@@ -60,32 +62,46 @@ feature -- Initialization
 			print(query)
 		end
 
-	add_technology
+-- AWARDS TEXT, MEMBERSHIP TEXT, PRIZES TEXT, INDUSTRY TEXT, OTHER TEXT"
+
+	add_technology(report_id: INTEGER;patents, licensing:STRING)
 			-- section "TECHNOLOGY TRANSFER"
 		local
 			query: STRING
 		do
+			query := "UPDATE REPORTS_CONTENT SET PATENTS = '" + patents + "', LICENSING = '" + licensing + 	"' WHERE REPORT_ID = " + report_id.out + " ;"
+			invoke_update_statement (query)
+			print(query)
 		end
 
-	add_distinctions
+	add_distinctions(report_id: INTEGER;awards, membership, prizes:STRING)
 			-- section "DISTINCTIONS"
 		local
 			query: STRING
 		do
+			query := "UPDATE REPORTS_CONTENT SET AWARDS = '" + awards + "', MEMBERSHIP = '" + membership + "', PRIZES = '" + prizes + "' WHERE REPORT_ID = " + report_id.out + " ;"
+			invoke_update_statement (query)
+			print(query)
 		end
 
-	add_outside
+	add_outside(report_id: INTEGER;industry:STRING)
 			-- section "OUTSIDE ACTIVITIES"
 		local
 			query: STRING
 		do
+			query := "UPDATE REPORTS_CONTENT SET INDUSTRY = '" + industry + "' WHERE REPORT_ID = " + report_id.out + " ;"
+			invoke_update_statement (query)
+			print(query)
 		end
 
-	add_other
+	add_other(report_id: INTEGER;other:STRING)
 			-- section "OTHER INFORMAITON"
 		local
 			query: STRING
 		do
+			query := "UPDATE REPORTS_CONTENT SET OTHER = '" + other + "' WHERE REPORT_ID = " + report_id.out + " ;"
+			invoke_update_statement (query)
+			print(query)
 		end
 
 	get_report_id_or_create (user_id: INTEGER; report_start, report_end: STRING): INTEGER
