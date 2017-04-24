@@ -23,5 +23,15 @@ feature{TEST}
         	Result := false;
         end
     end
+    
+    collision_test: BOOLEAN
+    local
+        user_id:INTEGER;
+    do
+    	db.add_user ("ANYNAME", "ANYUNIT")
+    	db.add_user ("ANYNAME", "ANOTHERUNIT")
+    	user_id := db.get_user_id_by_name ("ANYNAME")
+    	Result := (db.get_lab_name_by_id (user_id) = "ANOTHERUNIT")
+    end
 
 end
