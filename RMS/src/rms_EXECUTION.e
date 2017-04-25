@@ -244,11 +244,11 @@ feature -- Execution
 			grants, projects, collaborations, conference, journal: STRING
 		do
 			Result := true
-			grants := ""
-			projects := ""
-			collaborations := ""
-			conference := ""
-			journal := ""
+			grants := "<p><h3>Grants</h3></p>"
+			projects := "<p><h3>Projects</h3></p>"
+			collaborations := "<p><h3>Collaborations</h3></p>"
+			conference := "<p><h3>Conference</h3></p>"
+			journal := "<p><h3>Journal</h3></p>"
 				--grants_note_1=1&research_note_1=2&partnership_note_1=3&publ_note_1=4&publication_note_1=5&submit=Send
 			across
 				request.query_parameters as q
@@ -278,11 +278,11 @@ feature -- Execution
 			courses, examinations, supervised, reports, phd_theses: STRING
 		do
 			Result := true
-			courses := ""
-			examinations := ""
-			supervised := ""
-			reports := ""
-			phd_theses := ""
+			courses := "<p><h3>Courses</h3></p>"
+			examinations := "<p><h3>Examinations</h3></p>"
+			supervised := "<p><h3>Supervised</h3></p>"
+			reports := "<p><h3>Reports</h3></p>"
+			phd_theses := "<p><h3>PHD theses</h3></p>"
 			across
 				request.query_parameters as q
 			loop
@@ -310,8 +310,8 @@ feature -- Execution
 			patents, licensing: STRING
 		do
 			Result := true
-			patents :=""
-			licensing := ""
+			patents :="<p><h3>Patents</h3></p>"
+			licensing := "<p><h3>Licensing</h3></p>"
 			across
 				request.query_parameters as q
 			loop
@@ -333,9 +333,9 @@ feature -- Execution
 			awards, membership, prizes: STRING
 		do
 			Result := true
-			awards := ""
-			membership := ""
-			prizes := ""
+			awards := "<p><h3>Awards</h3></p>"
+			membership := "<p><h3>Membership</h3></p>"
+			prizes := "<p><h3>Prizes</h3></p>"
 			across
 				request.query_parameters as q
 			loop
@@ -359,7 +359,7 @@ feature -- Execution
 			industry: STRING
 		do
 			Result := true
-			industry := ""
+			industry := "<p><h3>Industry</h3></p>"
 			across
 				request.query_parameters as q
 			loop
@@ -380,7 +380,7 @@ feature -- Execution
 			other: STRING
 		do
 			Result := true
-			other := ""
+			other := "<p><h3>Other</h3></p>"
 			across
 				request.query_parameters as q
 			loop

@@ -1,11 +1,4 @@
-﻿.container{
-	position: absolute;
-	width: 100%;
-	top: 50%;
-	left: 50%;
-	margin-left: -478px;
-	margin-top: -304px;
-}
+﻿
 /*Стили для всех block titles*/
 .block_title{
 	position: relative;
@@ -19,10 +12,13 @@
 /*Блок 1 и его содержимое*/
 .block1{
 	position: absolute;
-	width: 930px;
-	height: 200px;
+	margin-left: 478px;
+	margin-top: 60px;
+	width: 430px;
+	min-height: 200px;
 	border: 2px solid #000;
 	border-radius: 15px;
+	padding-bottom: 20px;
 	text-align: center;
 }
 .block1_content{
